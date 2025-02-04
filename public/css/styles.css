@@ -145,6 +145,12 @@ footer {
   padding: 1rem;
 }
 
+/* Error page */
+#error-message {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
 
 @media only screen and (min-width: 700px) {
   body {
