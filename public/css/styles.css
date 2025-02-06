@@ -16,7 +16,7 @@ h3 {
 p,
 li,
 a {
-  font-family: "Roboto", serif;
+  font-family: "Roboto", sans-serif;
 }
 
 header {
@@ -47,14 +47,19 @@ nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0;
 }
 
 nav li {
   flex: 1;
   list-style: none;
-  color: white;
   text-align: center;
   padding: 1rem 0;
+}
+
+nav li a {
+  text-decoration: none;
+  color: white;
 }
 
 nav li:hover {
@@ -115,7 +120,8 @@ nav li:hover {
 
 .items {
   display: grid;
-  grid-template: 1fr 1fr/1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
