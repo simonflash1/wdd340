@@ -66,7 +66,6 @@ nav li:hover {
   background: rgba(0, 0, 0, 0.263);
 }
 
-
 #hero {
   position: relative;
 }
@@ -103,7 +102,6 @@ nav li:hover {
 #hero a:hover {
   background-color: rgb(78, 7, 7);
 }
-
 
 #info {
   display: flex;
@@ -156,7 +154,78 @@ footer {
   text-align: center;
   padding: 4rem 1rem;
 }
+.notice {
+  color: red;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgb(226, 226, 226);
+  border: 2px solid darkred;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 2px rgb(67, 0, 0);
+}
 
+form label,
+form input,
+form select,
+form textarea {
+  display: block;
+}
+form label {
+  margin-bottom: 1rem;
+}
+
+form input,
+select {
+  width: 100%;
+  height: 35px;
+  font-size: large;
+  padding: 0.5rem;
+}
+
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+form input:focus:invalid {
+  background-color: rgb(237, 160, 160);
+}
+
+form input:required:valid {
+  background-color: rgb(179, 246, 179);
+}
+
+form button {
+  width: fit-content;
+  margin: 0.5rem auto;
+  height: 30px;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  background-color: #000000;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+form button:hover {
+  background-color: darkred;
+  color: white;
+}
+
+form p {
+  text-align: center;
+  font-weight: 400;
+}
+
+form p a:hover {
+  color: darkred;
+}
 
 @media only screen and (min-width: 700px) {
   body {
@@ -182,5 +251,10 @@ footer {
 
   #info {
     flex-direction: row;
+  }
+  #details-view {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
   }
 }
