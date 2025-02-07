@@ -178,8 +178,13 @@ form textarea {
 }
 form label {
   margin-bottom: 1rem;
+  margin-top: 1rem;
+  text-decoration: underline;
 }
-
+form span {
+  font-size: small;
+  margin-bottom: 1rem;
+}
 form input,
 select {
   width: 100%;
@@ -225,6 +230,16 @@ form p {
 
 form p a:hover {
   color: darkred;
+}
+
+#pswdBtn {
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 2px;
+  margin-top: 1em;
+  font-size: small;
+  width: 7em;
+  text-align: center;
 }
 
 @media only screen and (min-width: 700px) {
