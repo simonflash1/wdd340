@@ -33,4 +33,67 @@ invCont.getDetails = async (req, res, next) => {
     })
 }
 
+invCont.buildManagement = async (req, res, next) => {
+  let nav = await utilities.getNav()
+  res.render("./inventory/management", {
+    title: "Inventory Management",
+    nav,
+    errors: null
+  })
+}
+/* ****************************************
+*  Deliver add classification view
+* *************************************** */
+invCont.buildAddClassification = async (req, res, next) => {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+    errors: null
+  })
+}
+
+/* ****************************************
+*  Process addClassification
+* *************************************** */
+invCont.addClassification = async (req, res) => {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+  const classificationResult = await invModel.addClassification(classification_name)
+  if (classificationResult) {
+    nav = await utilities.getNav();
+    req.flash("notice", `The classification ${classification_name} was added successfully.`)
+    res.status(201).render("inventory/management", {
+      title: "Management",
+      nav,
+      errors: null,
+    });
+    
+  } else {
+    req.flash("notice", "Sorry, the classification could not be added.")
+    res.status(501).render("./inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      errors: null,
+    })
+  }
+}
+
+/* ****************************************
+*  Deliver add inventory view
+* *************************************** */
+invCont.buildAddInventory = async (req, res, next) => {
+  let nav = await utilities.getNav()
+  let list = await utilities.buildClassificationList()
+  res.render("./inventory/add-inventory", {
+    title: "Add New Inventory",
+    nav,
+    list,
+    errors: null
+  })
+}
+/* ****************************************
+*  Process addInventory
+* *************************************** */
+
 module.exports = invCont
