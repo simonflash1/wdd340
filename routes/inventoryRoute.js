@@ -14,17 +14,20 @@ router.get("/detail/:id", utilities.handleErrors(invController.getDetails));
 // Route to build inventory management view
 router.get("/management", utilities.handleErrors(invController.buildManagement));
 
-// Route to build add classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
 
 // Route to add classification
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
 router.post("/add-classification",
     invValidate.addClassificationRules(),
     invValidate.checkAddClassificationData,
     utilities.handleErrors(invController.addClassification));
 
+    // Route to add inventory
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
-//router.post("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+router.post("/add-inventory", 
+    invValidate.addInventoryRules(),
+    invValidate.checkAddInventoryData,
+    utilities.handleErrors(invController.addInventory));
 
 
 

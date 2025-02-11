@@ -56,7 +56,7 @@ validate.addInventoryRules = () => {
       .isInt()
       .withMessage("Please provide a classification id."), // on error this message is sent.
 
-    // make is required and must be string 3 characters or more
+    // make is required and must be 3 characters or more
     body("inv_make")
       .trim()
       .escape()
@@ -64,7 +64,7 @@ validate.addInventoryRules = () => {
       .isLength({ min: 3 })
       .withMessage("Please provide a make."), // on error this message is sent.
 
-      // model is required and must be string 3 characters or more
+      // model is required and must be 3 characters or more
     body("inv_model")
       .trim()
       .escape()
@@ -110,9 +110,10 @@ validate.addInventoryRules = () => {
         .escape()
         .notEmpty()
         .isInt({ min: 1900, max: 2099 })
+        .isLength({ min: 4, max: 4 })
         .withMessage("Please provide a year."), // on error this message is sent.
 
-        // miles is required and must be number integer
+        // miles is required and must be number integer, not decimal
         body("inv_miles")
           .trim()
           .escape()

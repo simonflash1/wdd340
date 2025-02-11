@@ -80,7 +80,7 @@ invCont.addClassification = async (req, res) => {
 }
 
 /* ****************************************
-*  Deliver add inventory view
+*  Deliver addInventory view
 * *************************************** */
 invCont.buildAddInventory = async (req, res, next) => {
   let nav = await utilities.getNav()
@@ -95,5 +95,32 @@ invCont.buildAddInventory = async (req, res, next) => {
 /* ****************************************
 *  Process addInventory
 * *************************************** */
+invCont.addInventory = async (req, res) => {
+  let nav = await utilities.getNav()
+  let list = await utilities.buildClassificationList()
+  const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+  const inventoryResult = await invModel.addInventory(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
+  console.log(inventoryResult);
+  if (inventoryResult) {``
+    nav = await utilities.getNav();
+    req.flash("notice", `The inventory ${inv_make} ${inv_model} was added successfully.`)
+    res.status(201).render("./inventory/management", {
+      title: "Management",
+      nav,
+      list,
+      errors: null,
+    });
+  } else {
+    console.log('made it to the else');
+    list = await utilities.buildClassificationList();
+    req.flash("notice", "Sorry, the inventory could not be added.")
+    res.status(501).render("./inventory/add-inventory", {
+      title: "Add New Inventory",
+      nav,
+      list,
+      errors: null,
+    })
+  }
+}
 
 module.exports = invCont
