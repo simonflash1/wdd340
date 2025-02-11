@@ -103,7 +103,7 @@ invCont.addInventory = async (req, res) => {
   console.log(inventoryResult);
   if (inventoryResult) {``
     nav = await utilities.getNav();
-    req.flash("notice", `The inventory ${inv_make} ${inv_model} was added successfully.`)
+    req.flash("notice", `The vehicle ${inv_make} ${inv_model} was added successfully.`)
     res.status(201).render("./inventory/management", {
       title: "Management",
       nav,
@@ -113,7 +113,7 @@ invCont.addInventory = async (req, res) => {
   } else {
     console.log('made it to the else');
     list = await utilities.buildClassificationList();
-    req.flash("notice", "Sorry, the inventory could not be added.")
+    req.flash("notice", "Sorry, the vehicle could not be added.")
     res.status(501).render("./inventory/add-inventory", {
       title: "Add New Inventory",
       nav,
