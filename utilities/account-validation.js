@@ -80,7 +80,7 @@ validate.checkRegData = async (req, res, next) => {
 validate.loginRules = () => {
   return [
     // email is required and must be string
-    body("email")
+    body("account_email")
       .trim()
       .escape()
       .notEmpty()
@@ -105,6 +105,7 @@ validate.loginRules = () => {
 
 
 validate.checkLoginData = async (req, res, next) => {
+  console.log("Received password:", req.body.account_password);
   const { email, account_password } = req.body;
   let errors = [];
   errors = validationResult(req);

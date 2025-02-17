@@ -13,7 +13,7 @@ validate.addClassificationRules = () => {
       .trim()
       .escape()
       .notEmpty()
-      .withMessage("Classification name is required.")
+      .withMessage("Classification name is required .")
       .isLength({ min: 3 })
       .withMessage("Classification name must be at least 3 characters long.")
       .matches(/^[A-Za-z\s]+$/)
@@ -151,6 +151,35 @@ validate.checkAddInventoryData = async (req, res, next) => {
       inv_price,
       inv_year,
       inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
+validate.checkUpdateData = async (req, res, next) => {
+  const {inv_id, classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = req.body;
+  const options = await utilities.getOptions(classification_id);
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("inventory/edit-inventory", {
+      errors,
+      title: `Edit ${inv_make} ${inv_model}`,
+      options: options,
+      nav,
+      inv_id,
+      classification_id,
+      inv_make, 
+      inv_model, 
+      inv_description, 
+      inv_image, 
+      inv_thumbnail, 
+      inv_price, 
+      inv_year, 
+      inv_miles, 
       inv_color,
     });
     return;
