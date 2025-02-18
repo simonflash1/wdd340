@@ -105,7 +105,7 @@ validate.loginRules = () => {
 
 
 validate.checkLoginData = async (req, res, next) => {
-  console.log("Received password:", req.body.account_password);
+  //console.log("Received password:", req.body.account_password);
   const { email, account_password } = req.body;
   let errors = [];
   errors = validationResult(req);

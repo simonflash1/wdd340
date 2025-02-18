@@ -1,4 +1,4 @@
-console.log("static js file loaded");
+//console.log("static js file loaded");
 
 document.addEventListener("DOMContentLoaded", function () {
     const pswdBtn = document.querySelector("#pswdBtn");

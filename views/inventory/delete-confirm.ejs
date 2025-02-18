@@ -1,0 +1,71 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- Message -->
+    <%- messages() %> <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+    
+    <p>Confirm Deletion - The delete is permanent.</p>
+    
+    <form id="inventory-form" action="/inv/delete" method="post">
+      <label id="inv_make"
+        >Make<input
+        readonly
+          type="text"
+          name="inv_make"
+          title="Enter the make of the vehicle."
+          placeholder="Min of 3 characters"
+          value="<%= locals.inv_make %>"
+          pattern=".{3,}"
+          required
+      ></label>
+      <label id="inv_model"
+        >Model<input
+        readonly
+          type="text"
+          name="inv_model"
+          title="Enter the model of the vehicle."
+          placeholder="Min of 3 characters"
+          value="<%= locals.inv_model %>"
+          pattern=".{3,}"
+          required
+      ></label>
+      <label id="inv_year"
+        >Year<input
+        readonly
+          type="text"
+          name="inv_year"
+          title="Enter the year of the vehicle."
+          placeholder="4 digit year"
+          value="<%= locals.inv_year %>"
+          pattern="18[0-9]{2}|19[0-9]{2}|20[0-9]{2}"
+          required
+      ></label>
+      <label id="inv_price"
+        >Price<input
+        readonly
+          type="text"
+          name="inv_price"
+          title="Enter the price of the vehicle."
+          placeholder="decimal or integer"
+          value="<%= locals.inv_price %>"
+          pattern="[0-9.]+"
+          required
+      ></label>
+      <button
+        type="submit"
+        title="Delete Inventory"
+        aria-label="Delete Inventory">
+        Delete Inventory
+      </button>
+      <input type="hidden" name="inv_id"
+       <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"<% } %>>
+    </form>
+    
+    <script src="../../js/inv-update.js"></script>
