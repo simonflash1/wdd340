@@ -69,4 +69,54 @@ router.post(
   utilities.handleErrors(accountController.changePassword)
 );
 
+/* ****************************************
+ *  Admin Routes
+ * **************************************** */
+
+// Admin panel view (only accessible to admins)
+router.get(
+  "/admin",
+  utilities.checkLogin,
+    utilities.checkAccountType,
+  utilities.handleErrors(accountController.buildAdminPanel)
+);
+
+router.get('/admin/getUsers', async (req, res) => {
+  await accountController.getAllUsers(req, res)
+})
+
+
+// Edit user view
+router.get(
+  "/admin/edit/:account_id",
+  utilities.checkLogin,
+  utilities.checkAccountType,
+  utilities.handleErrors(accountController.buildEditUser)
+);
+
+// Process user update
+router.post(
+  "/edit-user/:account_id",
+  utilities.checkLogin,
+  utilities.checkAccountType,
+  regValidate.accountRules(),
+  regValidate.checkAccountData,
+  utilities.handleErrors(accountController.updateUser)
+);
+
+// user deletion view
+router.get(
+  "/admin/delete-confirm/:account_id",
+  utilities.checkLogin,
+  utilities.checkAccountType,
+  utilities.handleErrors(accountController.buildDeleteUser)
+);
+// Process user deletion
+router.post(
+  "/delete-user",
+  utilities.checkLogin,
+  utilities.checkAccountType,
+  utilities.handleErrors(accountController.deleteUser)
+);
+
 module.exports = router;

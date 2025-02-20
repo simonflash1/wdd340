@@ -104,6 +104,60 @@ async function changePassword(account_id, account_password) {
   }
 }
 
+/* *****************************
+ * GET ALL USERS
+ * *************************** */
+async function getAllUsers() {
+  try {
+    const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account ORDER BY account_id";
+    const result = await pool.query(sql);
+    return result.rows;
+  } catch (error) {
+    console.error("Error en getAllUsers:", error);
+    throw new Error("Error al obtener la lista de usuarios.");
+  }
+}
+
+/* *****************************
+ * UPDATE BY ID
+ * *************************** */
+async function updateUserById(account_id, account_firstname, account_lastname, account_email, account_type) {
+  try {
+    const sql = `UPDATE account 
+                 SET account_firstname = $1, 
+                     account_lastname = $2, 
+                     account_email = $3, 
+                     account_type = $4 
+                 WHERE account_id = $5 
+                 RETURNING *`;
+    const result = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type,
+      account_id
+    ]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error en updateUserById:", error);
+    throw new Error("Error al actualizar el usuario.");
+  }
+}
+
+/* *****************************
+ * DELETE BY ID
+ * *************************** */
+async function deleteUserById(account_id) {
+  try {
+    const sql = "DELETE FROM account WHERE account_id = $1 RETURNING *";
+    const result = await pool.query(sql, [account_id]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error en deleteUserById:", error);
+    throw new Error("Error al eliminar el usuario.");
+  }
+}
+
 module.exports = {
   registerAccount,
   checkExistingEmail,
@@ -111,4 +165,7 @@ module.exports = {
   getAccountById,
   updateAccount,
   changePassword,
+  getAllUsers,
+  updateUserById,
+  deleteUserById
 };

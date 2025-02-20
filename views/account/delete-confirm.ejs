@@ -1,0 +1,25 @@
+<% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  
+  <h1>Delete User</h1>
+  
+  <p>Are you sure you want to delete the following user?</p>
+  
+  <div>
+    <p><strong>First Name:</strong> <%= account_firstname %></p>
+    <p><strong>Last Name:</strong> <%= account_lastname %></p>
+    <p><strong>Email:</strong> <%= account_email %></p>
+    <p><strong>Account Type:</strong> <%= account_type %></p>
+  </div>
+  
+  <form action="/account/delete-user" method="POST">
+    <input type="hidden" name="account_id" value="<%= account_id %>">
+    <button type="submit" title="Confirm Delete" aria-label="Confirm Delete">Yes, Delete User</button>
+    <a href="/account/admin" title="Cancel" aria-label="Cancel" id = "cancel">Cancel</a>
+  </form>
+  

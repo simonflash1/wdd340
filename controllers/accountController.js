@@ -295,6 +295,117 @@ async function changePassword(req, res) {
   }
 }
 
+/* ****************************************
+ *  Deliver Admin Panel View
+ * *************************************** */
+async function buildAdminPanel(req, res) {
+  let nav = await utilities.getNav();
+//  const users = await accountModel.getAllUsers();
+  res.render("account/admin", {
+    title: "Admin Panel",
+    nav,
+    errors: null,
+  });
+}
+async function getAllUsers(req, res) {
+  try {
+    const users = await accountModel.getAllUsers();
+    res.json(users);
+  } catch (error) {
+    console.error("Error al obtener los usuarios:", error);
+    res.status(500).json({ error: "Error al obtener la lista de usuarios." });
+  }
+}
+
+/* ****************************************
+ *  Deliver Edit User View
+ * *************************************** */
+async function buildEditUser(req, res) {
+  let nav = await utilities.getNav();
+  const account_id = req.params.account_id;
+  const accountData = await accountModel.getAccountById(account_id);
+
+  res.render("account/edit-user", {
+    title: "Edit User",
+    nav,
+    errors: null,
+    account_id: accountData.account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+    account_type: accountData.account_type,
+  });
+}
+
+/* ****************************************
+ *  Process User Update
+ * *************************************** */
+async function updateUser(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body;
+
+  const updateResult = await accountModel.updateUserById(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_type
+  );
+
+  if (updateResult) {
+    req.flash("notice", `User ${account_firstname} was successfully updated.`);
+    res.status(201).redirect("/account/admin");
+  } else {
+    req.flash("notice", "Failed to update user.");
+    res.status(501).render("account/edit-user", {
+      title: "Edit User",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type,
+    });
+  }
+}
+
+/* ****************************************
+ *  Deliver Delete User View
+ * *************************************** */
+async function buildDeleteUser(req, res, next) {
+  let nav = await utilities.getNav();
+  const account_id = req.params.account_id;
+  const accountData = await accountModel.getAccountById(account_id);
+
+  res.render("account/delete-confirm", {
+    title: "Delete User",
+    nav,
+    errors: null,
+    account_id: accountData.account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+    account_type: accountData.account_type,
+  });
+};
+
+/* ****************************************
+ *  Process User Deletion
+ * *************************************** */
+async function deleteUser(req, res) {
+  const { account_id } = req.body;
+  const deleteResult = await accountModel.deleteUserById(account_id);
+
+  if (deleteResult) {
+    req.flash("notice", "User was successfully deleted.");
+    res.status(200).redirect("/account/admin");
+  } else {
+    req.flash("notice", "Failed to delete user.");
+    res.status(500).redirect("/account/admin");
+  }
+}
+
 module.exports = {
   buildLogin,
   buildRegister,
@@ -305,4 +416,10 @@ module.exports = {
   buildUpdateAccount,
   updateAccount,
   changePassword,
+  buildAdminPanel,
+  getAllUsers,
+  buildEditUser,
+  updateUser,
+  buildDeleteUser,
+  deleteUser
 };

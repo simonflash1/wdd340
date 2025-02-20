@@ -1,0 +1,22 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %> 
+
+<%- messages() %> 
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<h2>Manage Users</h2>
+<p>Select a user to edit or delete.</p>
+
+<table id="userDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<script src="/js/admin.js"></script>

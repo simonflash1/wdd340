@@ -1,0 +1,42 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- Message -->
+    <%- messages() %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+      </ul>
+    <% } %>
+
+
+    <form id="account-update-form" action="/account/edit-user/:account_id" method="post">
+        <label>First name
+            <input type="text" name="account_firstname" title="Enter your first name" autocomplete="given-name" value="<%= locals.account_firstname %>" required>
+        </label>
+        <label>Last name
+            <input type="text" name="account_lastname" title="Enter your last name" autocomplete="family-name" value="<%= locals.account_lastname %>" required>
+        </label>
+        <label>Email address
+            <input id="updated-email" type="email" name="account_email" title="Enter your email address" autocomplete="email" value="<%= locals.account_email %>" required >
+        </label>
+        
+        <label>Account Type
+            <select name="account_type" required>
+                <option value="Client" <% if (locals.account_type === 'Client') { %>selected<% } %>>Client</option>
+                <option value="Employee" <% if (locals.account_type === 'Employee') { %>selected<% } %>>Employee</option>
+                <option value="Admin" <% if (locals.account_type === 'Admin') { %>selected<% } %>>Admin</option>
+            </select>
+        </label>
+        
+        <button type="submit" title="Update account" aria-label="Update account">Update account</button>
+        
+        <input type="hidden" name="account_id" 
+        <% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>      
+    </form>
+    
+    <script src="../../js/account-update.js"></script>

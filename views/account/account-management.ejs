@@ -25,3 +25,8 @@ locals.accountData.account_type == "Admin") {%>
   class="update-account"
   href="/account/update-account/<%- locals.accountData.account_id%>"
   >Update Account Information</a>
+
+  <% if (locals.accountData.account_type == "Admin") { %>
+  <h3>Admin Panel</h3>
+  <p><a id="info" href="/account/admin">Manage Users</a></p>
+<% } %>
